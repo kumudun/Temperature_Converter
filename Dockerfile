@@ -1,12 +1,8 @@
-FROM maven:3.9.6-eclipse-temurin-21 AS build
-
-LABEL authors="kumudu"
+FROM maven:3.9.6-eclipse-temurin-21
 
 WORKDIR /app
+COPY . .
 
-COPY pom.xml .
-COPY . /app
+RUN mvn -q clean package
 
-RUN mvn package
-
-CMD ["java", "-jar", "target/tem.jar"]
+CMD ["java", "-cp", "target/classes", "TemperatureConverter"]
